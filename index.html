@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* RESET */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:radial-gradient(circle at top,#2b004f,#120018,#08000d);
+  color:#f7ecff;
+  overflow-x:hidden;
+}
+
+button{
+  border:none;
+  background:none;
+  cursor:pointer;
+  outline:none;
+}
+button:focus{outline:none;}
+
+/* PAGES */
+.page{
+  min-height:100vh;
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:60px 20px;
+  animation:fade 1.2s ease forwards;
+}
+.page.active{display:flex;}
+
+/* HEADINGS */
+h1{
+  font-size:2.8rem;
+  margin-bottom:20px;
+  background:linear-gradient(90deg,#a78bfa,#fb7185);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+p{
+  max-width:650px;
+  font-size:1.05rem;
+  line-height:1.8;
+  opacity:.95;
+}
+
+/* BUTTONS */
+.next-btn{
+  margin-top:40px;
+  padding:12px 30px;
+  border-radius:30px;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  color:#fff;
+  transition:.3s;
+}
+.next-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 25px rgba(236,72,153,.6);
+}
+
+/* CAT GIF */
+.cat{
+  width:80px;
+  margin-bottom:25px;
+  animation:float 4s ease-in-out infinite;
+}
+
+/* OPEN LETTER */
+.open-letter{
+  margin-top:25px;
+  padding:14px 34px;
+  border-radius:30px;
+  background:linear-gradient(135deg,#60a5fa,#a78bfa);
+  color:#000;
+  font-weight:600;
+  animation:pulseGlow 2.2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow{
+  0%{box-shadow:0 0 0 rgba(96,165,250,0);}
+  50%{box-shadow:0 0 25px rgba(96,165,250,.6);}
+  100%{box-shadow:0 0 0 rgba(96,165,250,0);}
+}
+
+.letter-hint{
+  margin-top:12px;
+  font-size:.9rem;
+  opacity:.8;
+  animation:floatHint 2s ease-in-out infinite;
+}
+
+@keyframes floatHint{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-6px);}
+}
+
+/* LETTER */
+.birthday-text{
+  font-family:'Pacifico',cursive;
+  font-size:2.6rem;
+  margin-bottom:20px;
+  opacity:0;
+}
+
+.letter{
+  display:none;
+  margin-top:20px;
+  max-width:650px;
+  padding:35px;
+  border-radius:20px;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(12px);
+  box-shadow:0 0 40px rgba(167,139,250,.25);
+  font-family:'Pacifico',cursive;
+  font-size:1.4rem;
+  line-height:2;
+}
+
+/* SURPRISE */
+.surprise-btn{
+  margin-top:25px;
+  padding:12px 28px;
+  border-radius:30px;
+  background:linear-gradient(135deg,#34d399,#60a5fa);
+  color:#000;
+  font-weight:600;
+}
+.spark{
+  margin-top:25px;
+  font-size:1.2rem;
+  opacity:0;
+  transition:1s;
+}
+
+/* MUSIC */
+.music-btn{
+  margin-top:20px;
+  color:#fff;
+  text-decoration:underline;
+}
+
+/* CONFETTI */
+.confetti{
+  position:fixed;
+  top:-10px;
+  width:10px;
+  height:10px;
+  animation:fall linear forwards;
+}
+
+/* FALLING EMOJIS */
+.falling{
+  position:fixed;
+  top:-10px;
+  pointer-events:none;
+  animation:fallEmoji linear forwards;
+  opacity:.9;
+}
+
+/* ANIMATIONS */
+@keyframes fade{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:none;}
+}
+@keyframes float{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-12px);}
+}
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(360deg);}
+}
+@keyframes fallEmoji{
+  0%{transform:translateY(-10vh);}
+  100%{transform:translateY(110vh) rotate(360deg);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- AUDIO -->
+<audio id="lofi" loop preload="auto">
+  <source src="lofi.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<section class="page active">
+  <img class="cat" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
+  <h1>Hey Suriya!</h1>
+  <p>It’s your birthday today.<br>So I coded this website just for this moment.</p>
+
+  <button class="next-btn" onclick="startExperience()">Continue</button>
+  <button id="hiddenPlay" style="display:none"></button>
+</section>
+
+<!-- PAGE 2 -->
+<section class="page">
+  <img class="cat" src="https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif">
+  <h1>A Letter</h1>
+  <p>Here is a small letter for you!</p>
+
+  <button class="open-letter" id="letterBtn" onclick="openLetter()">Open Letter ✉️</button>
+  <div class="letter-hint" id="letterHint">tap here</div>
+
+  <div id="birthday" class="birthday-text">Happy Birthday 🎉</div>
+
+  <div id="letter" class="letter">
+  Wishing you a day as gentle as your smile 🌸<br>
+  May this year bring moments that surprise you softly ✨,<br>
+  laughter that stays a little longer 😊,<br>
+  and peace that feels natural to you 🤍.<br><br>
+  May you always find reasons to smile 🌷,<br>
+  even on ordinary days ☁️,<br>
+  and may good things quietly choose you 🌟,<br>
+  just the way they should 💫.
+</div>
+
+  <button class="next-btn" onclick="next()">Next</button>
+</section>
+
+<!-- PAGE 3 -->
+<section class="page">
+  <img class="cat" src="https://media1.giphy.com/media/vFKqnCdLPNOKc/giphy.gif">
+  <h1>One Last Thing</h1>
+  <p>Click once.</p>
+
+  <button class="surprise-btn" onclick="reveal()">Click Me</button>
+  <div id="spark" class="spark">Keep moving forward, stay motivated, and trust the grind 🌱⚔️. Life has tough arcs, but consistency wins. If you ever feel stuck or need clarity, you can tell me.</div>
+
+  <button class="next-btn" onclick="next()">Next</button>
+</section>
+
+<!-- FINAL PAGE -->
+<section class="page">
+  <img class="cat" src="https://media2.giphy.com/media/mhfqfSii6aBk3AUWY3/giphy.gif">
+  <h1>That’s all!</h1>
+  <p>Hope you enjoyed this little moment.</p>
+
+  <button class="music-btn" onclick="music()">Play / Pause Lo-fi</button>
+</section>
+
+<script>
+let i = 0;
+let letterClicks = 0;
+const pages = document.querySelectorAll('.page');
+const musicPlayer = document.getElementById('lofi');
+
+/* PAGE NAV */
+function next(){
+  pages[i].classList.remove('active');
+  i++;
+  pages[i].classList.add('active');
+}
+
+/* START EXPERIENCE */
+function startExperience(){
+  musicPlayer.volume = 0.6;
+  musicPlayer.play();
+  next();
+}
+
+/* OPEN LETTER + EASTER EGG */
+function openLetter(){
+  letterClicks++;
+
+  document.getElementById('birthday').style.opacity = 1;
+  document.getElementById('letter').style.display = 'block';
+
+  document.getElementById('letterBtn').style.animation = 'none';
+  document.getElementById('letterHint').style.display = 'none';
+
+  confetti();
+
+  if(letterClicks === 5){
+    partyBlast();
+  }
+}
+
+/* SURPRISE TEXT */
+function reveal(){
+  document.getElementById('spark').style.opacity = 1;
+}
+
+/* MUSIC TOGGLE */
+function music(){
+  musicPlayer.paused ? musicPlayer.play() : musicPlayer.pause();
+}
+
+/* CONFETTI */
+function confetti(){
+  for(let i=0;i<80;i++){
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.style.left=Math.random()*100+'vw';
+    c.style.background=`hsl(${Math.random()*360},100%,70%)`;
+    c.style.animationDuration=2+Math.random()*3+'s';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),5000);
+  }
+}
+
+/* EASTER EGG */
+function partyBlast(){
+  for(let i=0;i<250;i++){
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.style.left=Math.random()*100+'vw';
+    c.style.background=`hsl(${Math.random()*360},100%,70%)`;
+    c.style.animationDuration=2+Math.random()*4+'s';
+    c.style.width='14px';
+    c.style.height='14px';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),7000);
+  }
+
+  const box = document.createElement("div");
+  box.style.marginTop="35px";
+  box.style.padding="28px";
+  box.style.borderRadius="20px";
+  box.style.background="rgba(255,255,255,.12)";
+  box.style.backdropFilter="blur(14px)";
+  box.style.boxShadow="0 0 45px rgba(167,139,250,.6)";
+  box.style.textAlign="center";
+
+  box.innerHTML = `
+    <p style="font-size:1.3rem;">🎉 Surprise 🎉</p>
+    <a href="https://drive.google.com/file/d/1vaUFJXlsoCSu4LJ5BLa7UQILWqoqxarh/view?usp=drivesdk"
+       style="color:#93c5fd;font-size:1.1rem;">
+       Open this
+    </a>
+    <p style="margin-top:15px;font-family:'Pacifico',cursive;">
+      Here’s a sketch I tried to make for you.
+    </p>
+  `;
+
+  document.getElementById("letter").appendChild(box);
+}
+
+/* EMOJI RAIN */
+const emojis=["🌸","🌷","🌼","💐","✨","🎀","🐱","💖"];
+setInterval(()=>{
+  const e=document.createElement("div");
+  e.className="falling";
+  e.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+  e.style.left=Math.random()*100+"vw";
+  e.style.fontSize=16+Math.random()*16+"px";
+  e.style.animationDuration=5+Math.random()*5+"s";
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),10000);
+},500);
+</script>
+
+</body>
+</html>
